@@ -1,5 +1,6 @@
 clear all
 close all
+clc
 
 
 % set quadrature data
@@ -10,6 +11,7 @@ w_quad = [4/9,5/18,5/18];
 
 
 %% Step 1: Initialize the Problem this will extract as well
+fprintf("\nBeginning simple arc problem\n")
 problem = 1;
 [p_1,p_2,n_1,n_2,Xi_1,Xi_2,P,w,IEN,C,n_el,w_pre] = Prob3_geometry();
 
@@ -27,7 +29,7 @@ problem = 1;
 % 
 %% Problem 4 
 %Step One: Make the thing
-
+fprintf("\nBeginning wafer problem\n")
 problem = 2;
 [p_1,p_2,~,~,Xi_1,Xi_2,P,w,IEN,C,n_el,w_pre,P_post,Xi_1Parent,Xi_2Parent] = Prob4_geometry();
 
@@ -41,6 +43,7 @@ n_2 = length(Xi_2) - (p_2 + 1);
 % 
 %% Test box
 
+fprintf("\nBeginning single patch circle problem\n")
 problem = 3;
 
 [p_1,p_2,~,~,Xi_1,Xi_2,P,w,IEN,C,n_el,w_pre,P_post,Xi_1Parent,Xi_2Parent] = box_geometry();
@@ -55,7 +58,7 @@ n_2 = length(Xi_2) - (p_2 + 1);
 
 %% Now the circle of heat conduction
 % step 1: make the thing
-
+fprintf("\nBeginning multi-patch problem\n")
 [p_1,p_2,n_1,n_2,Xi_1,Xi_2,w1,w2,IEN,C,~,w_pre_s,w_pre,P_post1,P_post2,P_post3,P_post4,P_post5,P1,P2,P3,P4,P5,Xi_1Parent,Xi_2Parent] = circle_geometry();
 
 % now need to reconstruct the IEN array so it accounts for the multi patches
@@ -73,25 +76,5 @@ n_2_new = length(Xi_2) - (p_2 + 1);
 [d] = Heat_Conduction_circle(p_1,n_1_new,n_2_new,Xi_1Parent,Xi_2Parent,P_post,w,n_q,IEN,C,n_el,w_pre,w_quad,quad_p);
 
 plot_patches(p_1,p_2,n_1,n_2,Xi_1Parent,Xi_2Parent,P_post,w,d,IEN);
-
-%% Multi patch test geometry
-
-% step 1: make the thing
-% [p_1,p_2,n_1,n_2,Xi_1,Xi_2,w1,IEN,C,n_el,w_pre,P_post1,P_post2,P1,P2,Xi_1Parent,Xi_2Parent] = multipatch_test_geom();
-% 
-% P_post = cat(3,P_post1,P_post2);
-% w = cat(3,w1,w1);
-% w_pre = cat(2,w_pre,w_pre);
-% C = cat(3,C,C);
-% 
-% IEN = [IEN,IEN+20];
-% 
-% n_1_new = length(Xi_1) - (p_1 + 1);
-% n_2_new = length(Xi_2) - (p_2 + 1);
-% 
-% [d] = Heat_Conduction_multi(p_1,n_1_new,n_2_new,Xi_1Parent,Xi_2Parent,P_post,w,n_q,IEN,C,n_el,w_pre,w_quad,quad_p);
-% 
-% plot_patches(p_1,p_2,n_1,n_2,Xi_1Parent,Xi_2Parent,P_post,w,d,IEN);
-
 
 

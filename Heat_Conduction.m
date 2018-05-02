@@ -102,23 +102,26 @@ for i = 1:pre_max
         F(i) = g(i);
     end
 end
-k_e
 %% Step 3: Solve the Matrix System
-d_temp = K\F;
-%fprintf("Time for QR\n");
-%tic
-%d_temp = QRFact(K,F);
-%toc
+% d_temp = K\F;
+fprintf("Time for QR\n");
+tic
+d_temp = QRFact(K,F);
+toc
 
-%fprintf("Time for LU\n");
-%tic
-%d_temp = LUsolve(K,F);
-%toc
+fprintf("Time for LU\n");
+tic
+d_temp = LUsolve(K,F);
+toc
 % now reshape d so it matches what plot temp is expecting
 count = 1;
 for i = 1:n_1
     for j = 1:n_2
-        d(i,j) = d_temp(count);
+        if problem == 1
+            d(j,i) = d_temp(count);
+        else
+            d(i,j) = d_temp(count);
+        end
         count = count + 1;
     end
 end
